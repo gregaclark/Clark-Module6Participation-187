@@ -1,0 +1,80 @@
+//AUTHOR: Gregory Clark
+//COURSE: CPT 187
+//PURPOSE: Writes orders to files whenever a new order is placed
+//STARTDATE: 7/14/2020
+
+package edu.CPT187.Clark.program6;
+
+//Import Classes
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+public class WriteOrder 
+{//Start Supportive Class WriteOrder
+
+	//Non-Constant Class Attributes
+	private boolean fileFoundFlag = false;
+	private String masterFileName = "";
+	private int recordCount = 0;
+
+
+	//WriteOrder Constructor
+	public WriteOrder(String borrowedFileName)
+	{//Start WriteOrder Constructor
+		masterFileName = borrowedFileName; 
+	}//End WriteOrder Constructor
+
+
+	//Set Method
+	//This method will write order details to a file
+	public void setWriteOrder(int borrowedItemID, String borrowedItemName, double borrowedItemPrice, int borrowedQuantity, double borrowedOrderCost)
+	{//begin setWriteOrder
+
+		try
+		{//Try to write to file
+			//File has not yet been written to during this program run
+			//Instantiate FileWriter
+			PrintWriter filePW = new PrintWriter(new FileWriter(masterFileName, true));
+
+			//Write a record
+			filePW.printf("%n%d\t%s\t%f\t%d\t%.2f%n", borrowedItemID, borrowedItemName, borrowedItemPrice, borrowedQuantity,borrowedOrderCost);
+			fileFoundFlag = true;
+			//Close File
+			filePW.close();
+			//increment recordCount 
+			recordCount++; 
+
+		}//End Try
+
+		//Error catch
+		catch (IOException ex) 
+		{//Begin Catch
+			fileFoundFlag = false;
+		}//End Catch
+
+	}//end setWriteOrder
+
+
+	//Get Method
+	//this method will RETURN whether the setWriteOrder file was found
+	public boolean getFileFoundFlag()
+	{//begin getFileFoundFlag
+		return fileFoundFlag;
+	}//End getFileFoundFlag
+
+	//Get Method
+	//this method will RETURN the master order file name variable
+	public String getFileName()
+	{//begin getFileName
+		return masterFileName;
+	}//End getFileName
+
+	//Get Method
+	//this method will RETURN the number of records in the master order file
+	public int getRecordCount()
+	{//begin getRecordCount
+		return recordCount;
+	}//End getRecordCount
+
+}// End Supportive Class WriteOrder
